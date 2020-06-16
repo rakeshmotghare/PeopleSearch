@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using PeopleSearch.Models;
+using PeopleSearch.Data;
+using PeopleSearch.Service;
 
 namespace PeopleSearch.Controllers
 {
@@ -11,35 +11,35 @@ namespace PeopleSearch.Controllers
     [Route("[controller]")]
     public class PeopleController : ControllerBase
     {
-        int milliseconds = 3000;
+        int milliseconds = 1000;
 
         private readonly ILogger<PeopleController> _logger;
         private PeopleSearchDbContext Context { get; }
+        public IPeopleService PeopleService { get; }
 
-        public PeopleController(ILogger<PeopleController> logger, PeopleSearchDbContext context)
+        public PeopleController(ILogger<PeopleController> logger, PeopleSearchDbContext context, IPeopleService peopleService)
         {
             _logger = logger;
             Context = context;
+            PeopleService = peopleService;
         }
 
         [HttpGet]
         [Route("Get")]
-        public IEnumerable<People> Get()
+        public async Task<IActionResult> Get()
         {
             Thread.Sleep(milliseconds);
-            return Context.Peoples.OrderBy(p => p.FirstName).ToList();
+            var result = await PeopleService.GetAsync();
+            return Ok(result);
         }
 
         [HttpGet]
         [Route("People/{name}")]
-        public IList<People> GetbyName(string name = "")
+        public async Task<IActionResult> GetbyName(string name = "")
         {
             Thread.Sleep(milliseconds);
-
-            if (string.IsNullOrEmpty(name))
-                return Context.Peoples.OrderBy(p => p.FirstName).ToList();
-
-            return Context.Peoples.Where(p => p.FirstName.Contains(name) || p.LastName.Contains(name)).OrderBy(p => p.FirstName).ToList();
+            var result = await PeopleService.GetbyNameAsync(name);
+            return Ok(result);
         }
     }
 }

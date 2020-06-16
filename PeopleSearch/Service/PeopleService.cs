@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using PeopleSearch.Data;
 using PeopleSearch.Models;
 
 namespace PeopleSearch.Service
 {
-    public class PeopleService
+    public class PeopleService : IPeopleService
     {
         public PeopleSearchDbContext Context { get; }
 
@@ -15,14 +16,17 @@ namespace PeopleSearch.Service
             Context = context;
         }
 
-        public IList<People> GetPeoples()
+        public async Task<IList<People>> GetAsync()
         {
-            return Context.Peoples.OrderBy(p => p.FirstName).ToList();
+            return await Context.Peoples.OrderBy(p => p.FirstName).ToListAsync();
         }
 
-        public IList<People> GetPeoples(string name)
+        public async Task<IList<People>> GetbyNameAsync(string name = "")
         {
-            return Context.Peoples.Where(p => name.Contains(p.FirstName) || name.Contains(p.LastName)).ToList();
+            if (string.IsNullOrEmpty(name))
+                return await GetAsync();
+
+            return await Context.Peoples.Where(p => p.FirstName.Contains(name) || p.LastName.Contains(name)).OrderBy(p => p.FirstName).ToListAsync();
         }
     }
 }

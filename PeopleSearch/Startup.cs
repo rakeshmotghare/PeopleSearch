@@ -5,7 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PeopleSearch.Models;
+using PeopleSearch.Data;
+using PeopleSearch.Service;
 
 namespace PeopleSearch
 {
@@ -24,7 +25,7 @@ namespace PeopleSearch
             services.AddDbContext<PeopleSearchDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), 
                 options=>options.EnableRetryOnFailure()));
-            
+            services.AddScoped<IPeopleService, PeopleService>();
             services.AddControllersWithViews();
             
             // In production, the Angular files will be served from this directory

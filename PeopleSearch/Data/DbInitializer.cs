@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using PeopleSearch.Models;
 
 namespace PeopleSearch.Data
@@ -23,7 +20,7 @@ namespace PeopleSearch.Data
                 new People{ FirstName="John", LastName="Doe", Age=23, Address="120 jefferson st.,Riverside, NJ, 08075", Interest="Interest2", ImageUrl="assets/images/pokemon1.png" },
                 new People{ FirstName="Jack", LastName="McGinnis", Age=30, Address="220 hobo Av.,Phila, PA,09119", Interest="Interest22", ImageUrl="assets/images/doraemon1.png" },
                 new People{ FirstName="John", LastName="Da Man", Age=30, Address="Repici,120 Jefferson St.,Riverside, NJ,08075", Interest="Interest23", ImageUrl="assets/images/sonic.png" },
-                new People{ FirstName="Stephen", LastName="", Age=40, Address="Blankman,,SomeTown, SD, 00298", Interest="Interest12", ImageUrl="assets/images/sinbacartoon.png" }
+                new People{ FirstName="Stephen", LastName="Jones", Age=40, Address="Blankman,,SomeTown, SD, 00298", Interest="Interest12", ImageUrl="assets/images/sinbacartoon.png" }
             };
 
             dbContext.Peoples.AddRange(peoples);

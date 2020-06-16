@@ -1,7 +1,8 @@
-<!--<div style="text-align:center; width:100%">
-  <p *ngIf="!peopleList" style="text-align: center;width: 100%"><em>Loading...</em></p>
-</div>-->
-
+<style>
+  .loading {
+    background-image: url(\assets\images\loading.gif);
+  }
+</style>
 <div *ngIf="!peopleList || loading" class="spinner-border text-muted loader"></div>
 
 <div>
@@ -22,7 +23,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let person of peopleList">
-      <td><img class="loading" [src]='person.imageUrl' [style.width.px]='imageWidth' [style.margin.px]='imageMargin' /></td>
+      <td><img alt="loading" class="loading" [src]='person.imageUrl' [style.width.px]='imageWidth' [style.margin.px]='imageMargin' /></td>
       <td>{{ person.firstName }}</td>
       <td>{{ person.lastName }}</td>
       <td>{{ person.age}}</td>
